@@ -33,10 +33,9 @@ public class UserController {
     @GetMapping("/login")
     public ResultVo login(@RequestParam("username") String name,
                           @RequestParam("password") String pwd) {
-        ResultVo checklogin = userService.checklogin(name, pwd);
-        return checklogin;
-    }
+        return userService.checklogin(name, pwd);
 
+    }
 
 
     @ApiOperation("用户注册接口")
@@ -46,13 +45,13 @@ public class UserController {
     })
     @PostMapping("/regist")
     public ResultVo regist(@RequestBody Users users) {
-        ResultVo resultVo = userService.userRegist(users.getUsername(),users.getPassword());
-        return resultVo;
+        return userService.userRegist(users.getUsername(), users.getPassword());
+
     }
 
     @ApiOperation("校验token是否过期接口")
     @GetMapping("/check")
-    public ResultVo userTokencheck(@RequestHeader("token") String token){
-        return new ResultVo(ResStauts.OK,"success",null);
+    public ResultVo userTokencheck(@RequestHeader("token") String token) {
+        return new ResultVo(ResStauts.OK, "success", null);
     }
 }

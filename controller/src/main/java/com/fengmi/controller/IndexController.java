@@ -1,7 +1,6 @@
 package com.fengmi.controller;
 
 import com.fengmi.famall.vo.ResultVo;
-import com.fengmi.fmmall.dao.ProductMapper;
 import com.fengmi.fmmall.service.CategoryService;
 import com.fengmi.fmmall.service.IndexImgService;
 import com.fengmi.fmmall.service.ProductService;
@@ -24,28 +23,30 @@ public class IndexController {
     private CategoryService categoryService;
     @Autowired
     private ProductService productService;
-     @GetMapping("/indeximg")
-     @ApiOperation("首页轮播图接口")
 
-     public ResultVo listIndexImgs(){
-         return indexImgService.listIndexImgs();
-     }
+    @GetMapping("/indeximg")
+    @ApiOperation("首页轮播图接口")
+
+    public ResultVo listIndexImgs() {
+        return indexImgService.listIndexImgs();
+    }
 
 
     @GetMapping("/cotegory")
     @ApiOperation("商品分类查询接口")
-    public  ResultVo listcategories(){
-         return categoryService.listcategories();
+    public ResultVo listcategories() {
+        return categoryService.listcategories();
     }
+
     @GetMapping("/list-commend")
     @ApiOperation("新品推荐查询接口")
-    public ResultVo listProduct(){
-         return productService.selectProductVo();
+    public ResultVo listProduct() {
+        return productService.selectProductVo();
     }
 
     @GetMapping("/first-commend")
     @ApiOperation("分类推荐查询接口")
-    public ResultVo listFirstBycategoryies(){
+    public ResultVo listFirstBycategoryies() {
         return categoryService.listFirstcategories();
     }
 }

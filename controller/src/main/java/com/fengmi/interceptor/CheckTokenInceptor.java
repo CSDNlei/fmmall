@@ -3,7 +3,10 @@ package com.fengmi.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fengmi.famall.vo.ResStauts;
 import com.fengmi.famall.vo.ResultVo;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,12 +22,11 @@ public class CheckTokenInceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String method = request.getMethod();
 //         放行options请求
-        if ("OPTIONS".equalsIgnoreCase(method)){
+        if ("OPTIONS".equalsIgnoreCase(method)) {
             return true;
         }
         String token = request.getHeader("token");
 
-        System.out.println("------------" + token);
         if (token == null) {
 //              提示请先登录
             ResultVo resultVo = new ResultVo(ResStauts.LOGIN_FAIL_NOT, "请先登录！", null);
@@ -36,7 +38,7 @@ public class CheckTokenInceptor implements HandlerInterceptor {
 //            解析token  必须和生成的token密码一致
                 parser.setSigningKey("leilei66");
 //            如果token正确（密码正确 有效期内）则正常执行 否则抛出异常
-                Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+                parser.parseClaimsJws(token);
                 return true;
 
             } catch (ExpiredJwtException e) {

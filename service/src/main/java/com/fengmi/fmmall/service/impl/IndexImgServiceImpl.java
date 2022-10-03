@@ -15,14 +15,15 @@ public class IndexImgServiceImpl implements IndexImgService {
     @Autowired
     private IndexImgMapper indexImgMapper;
 
+    @Override
     public ResultVo listIndexImgs() {
         List<IndexImg> indexImgs = indexImgMapper.listIndexImgs();
-         if (indexImgs.size()==0){
-             return new ResultVo(ResStauts.NO,"fail",null);
-         }else {
-             return new ResultVo(ResStauts.OK,"success",indexImgs);
+        if (indexImgs.isEmpty()) {
+            return new ResultVo(ResStauts.NO, "fail", null);
+        } else {
+            return new ResultVo(ResStauts.OK, "success", indexImgs);
 
-         }
+        }
 
     }
 }

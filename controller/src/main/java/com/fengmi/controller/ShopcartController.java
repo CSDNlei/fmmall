@@ -2,7 +2,6 @@ package com.fengmi.controller;
 
 import com.fengmi.famall.vo.ResStauts;
 import com.fengmi.famall.vo.ResultVo;
-import com.fengmi.famall.vo.utils.Base64Utils;
 import com.fengmi.fmmall.entity.ShoppingCart;
 import com.fengmi.fmmall.service.ShopCartService;
 import io.jsonwebtoken.*;
@@ -10,7 +9,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,7 +41,6 @@ public class ShopcartController {
 //                获取token中的用户数据
                 Claims body = claimsJws.getBody();
 //                获取生成token中subject的值
-//                String subject = body.getSubject();
 //                获取生成token时存储的claims的map中的值
                 String keys = body.get("key1", String.class);
                 return new ResultVo(ResStauts.OK, "success", keys);

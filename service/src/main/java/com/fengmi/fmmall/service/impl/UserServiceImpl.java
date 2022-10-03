@@ -2,9 +2,7 @@ package com.fengmi.fmmall.service.impl;
 
 import com.fengmi.famall.vo.ResStauts;
 import com.fengmi.famall.vo.ResultVo;
-import com.fengmi.famall.vo.utils.Base64Utils;
 import com.fengmi.famall.vo.utils.MD5Utils;
-
 import com.fengmi.fmmall.dao.UsersMapper;
 import com.fengmi.fmmall.entity.Users;
 import com.fengmi.fmmall.service.UserService;
@@ -25,6 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UsersMapper usersMapper;
 
+    @Override
     @Transactional
     public ResultVo userRegist(String name, String pwd) {
 //        根据用户查询，这个用户是否已经被注册
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
             criteria.andEqualTo("username", name);
             List<Users> users = usersMapper.selectByExample(example);
 //         如果没有被注册，则进行保存操作
-            if (users.size() == 0) {
+            if (users.isEmpty()) {
                 String md5Pwd = MD5Utils.md5(pwd);
                 Users user = new Users();
                 user.setUsername(name);
@@ -62,13 +61,12 @@ public class UserServiceImpl implements UserService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username", name);
         List<Users> users = usersMapper.selectByExample(example);
-        if (users.size() == 0) {
+        if (users.isEmpty()) {
             return new ResultVo(ResStauts.NO, "登录失败！用户名不存在！", null);
         } else {
             String md5Pwd = MD5Utils.md5(pwd);
             if (md5Pwd.equals(users.get(0).getPassword())) {
 //                  如果登录验证成功后 则需要生成验证令牌token（token就是按特定规则生成的字符串）
-//                String token = Base64Utils.encode(name+"QINGfeng6666");
 
 //                  使用jwt规则生成字符串
                 JwtBuilder builder = Jwts.builder();
@@ -92,31 +90,3 @@ public class UserServiceImpl implements UserService {
         }
     }
 }
-//    @Resource
-//    private UserDao userDao;
-//
-//    @Override
-//    public ResultVo userRegist(String username, String pwd) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ResultVo checklogin(String username, String pwd) {
-//        User name = userDao.queryByName(username);
-//        if (name == null) {
-////              用户名不存在
-//            return new ResultVo(10001, "用户名不存在", null);
-//        } else {
-////                使用md5进行加密
-////             使用加密后的密码和name中的密码进行匹配
-//            if (name.getPassword().equals(pwd)) {
-////                 验证成功
-//                return new ResultVo(10000, "登录成功", name);
-//            } else {
-////            验证失败
-//                return new ResultVo(10001, "密码错误", null);
-//
-//            }
-//        }
-//    }
-

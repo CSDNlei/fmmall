@@ -5,4 +5,6 @@ import com.fengmi.fmmall.entity.ShoppingCart;
 
 public interface ShopCartService {
       ResultVo shopCartadd(ShoppingCart cart);
+
+      ResultVo listShopCartByUserId(int userId);
 }

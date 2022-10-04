@@ -3,9 +3,10 @@ package com.fengmi;
 import com.fengmi.fmmall.dao.CategoryMapper;
 import com.fengmi.fmmall.dao.ProductCommentsMapper;
 import com.fengmi.fmmall.dao.ProductMapper;
+import com.fengmi.fmmall.dao.ShoppingCartMapper;
 import com.fengmi.fmmall.entity.CategoryVo;
-import com.fengmi.fmmall.entity.ProductCommentsVo;
 import com.fengmi.fmmall.entity.ProductVo;
+import com.fengmi.fmmall.entity.ShoppingCartVo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,13 @@ import java.util.List;
 class ControllerApplicationTests {
     @Autowired
     private CategoryMapper categoryMapper;
-   @Autowired
-   private ProductMapper productMapper;
-   @Autowired
-   private ProductCommentsMapper productCommentsMapper;
+    @Autowired
+    private ProductMapper productMapper;
+    @Autowired
+    private ProductCommentsMapper productCommentsMapper;
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
+
     @Test
     void contextLoads() {
         List<CategoryVo> categoryVos = categoryMapper.selectAllCategories2(0);
@@ -30,7 +34,6 @@ class ControllerApplicationTests {
             System.err.println(c1);
             for (CategoryVo c2 : c1.getCategories()) {
                 System.err.println("///" + c2);
-
                 for (CategoryVo c3 : c2.getCategories()) {
                     System.err.println("//////" + c3);
                 }
@@ -41,26 +44,27 @@ class ControllerApplicationTests {
     }
 
     @Test
-    public void test01(){
+    public void test01() {
         List<ProductVo> productVos = productMapper.selectProductVo();
-        for (ProductVo p : productVos){
+        for (ProductVo p : productVos) {
             System.err.println(p);
         }
 
     }
+
     @Test
-    public void test02(){
+    public void test02() {
         List<CategoryVo> categoryVos = categoryMapper.selectFirstCategories();
-         for (CategoryVo c:categoryVos){
-             System.err.println(c);
-         }
+        for (CategoryVo c : categoryVos) {
+            System.err.println(c);
+
+        }
     }
+
     @Test
-    public void test03(){
-//        List<ProductCommentsVo> productCommentsVos = productCommentsMapper.selectCommentsById("3");
-//        for (ProductCommentsVo niubi:productCommentsVos){
-//            System.err.println("niubi = " + niubi);
-//    }
+    public void test03() {
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectshopcartByUserId(49);
+        System.out.println(shoppingCartVos);
     }
 
 }

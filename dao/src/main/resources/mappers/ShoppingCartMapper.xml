@@ -14,4 +14,37 @@
     <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
     <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
   </resultMap>
+  <resultMap id="ShopCartVoMap" type="com.fengmi.fmmall.entity.ShoppingCartVo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="cart_num" jdbcType="VARCHAR" property="cartNum" />
+    <result column="cart_time" jdbcType="VARCHAR" property="cartTime" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="url" jdbcType="VARCHAR" property="productImg" />
+  </resultMap>
+
+  <select id="selectshopcartByUserId" resultMap="ShopCartVoMap">
+      select s.cart_id,
+ s.product_id,
+ s.sku_id,
+ s.user_id,
+ s.cart_num,
+ s.cart_time,
+ s.product_price,
+ s.sku_props,
+ p.product_name,i.url from
+shopping_cart s
+INNER JOIN product p
+INNER JOIN product_img i
+on s.product_id=p.product_id and
+p.product_id=i.item_id
+where user_id=#{userId} and i.is_main=1
+  </select>
 </mapper>

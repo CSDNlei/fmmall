@@ -4,12 +4,16 @@ import com.fengmi.famall.vo.ResStauts;
 import com.fengmi.famall.vo.ResultVo;
 import com.fengmi.fmmall.dao.ShoppingCartMapper;
 import com.fengmi.fmmall.entity.ShoppingCart;
+import com.fengmi.fmmall.entity.ShoppingCartVo;
 import com.fengmi.fmmall.service.ShopCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ShopCartServiceImpl implements ShopCartService {
@@ -28,5 +32,12 @@ public class ShopCartServiceImpl implements ShopCartService {
 
         }
 
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public ResultVo listShopCartByUserId(int userId) {
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectshopcartByUserId(userId);
+        return new ResultVo(ResStauts.OK,"success",shoppingCartVos);
     }
 }

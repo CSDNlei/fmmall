@@ -35,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
     public ResultVo getProductbasicinfo(String productId) {
 //        商品基本信息
         Example example = new Example(Product.class);
@@ -75,8 +76,8 @@ public class ProductServiceImpl implements ProductService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("productId", productId);
         List<ProductParams> productParams = productParamsMapper.selectByExample(example);
-        if (productParams.size()>0) {
-             return new ResultVo(ResStauts.OK,"success",productParams.get(0));
+        if (productParams.size() > 0) {
+            return new ResultVo(ResStauts.OK, "success", productParams.get(0));
         } else {
             return new ResultVo(ResStauts.NO, "此产品可能为三无产品！", null);
         }

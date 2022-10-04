@@ -28,9 +28,9 @@ public class ShopcartController {
 //          1.获取token
 //          2.校验token
         if (token == null) {
-            return new ResultVo(ResStauts.NO, "请先登录！", "null");
-        } else {
 
+             return new ResultVo(ResStauts.NO, "请先登录！", "null");
+        } else {
             try {
 //                验证token
                 JwtParser parser = Jwts.parser();
@@ -61,5 +61,11 @@ public class ShopcartController {
     public ResultVo shopcartadd(@RequestBody ShoppingCart cart, @RequestHeader("token") String token) {
         return shopCartService.shopCartadd(cart);
 
+    }
+
+    @GetMapping("/listshopcart")
+    @ApiImplicitParam(dataType = "int", name = "userId", value = "用户id", required = true)
+    public ResultVo shopcartlist(Integer userId,@RequestHeader("token") String token) {
+        return shopCartService.listShopCartByUserId(userId);
     }
 }

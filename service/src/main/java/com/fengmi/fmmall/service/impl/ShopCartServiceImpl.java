@@ -40,4 +40,15 @@ public class ShopCartServiceImpl implements ShopCartService {
         List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectshopcartByUserId(userId);
         return new ResultVo(ResStauts.OK,"success",shoppingCartVos);
     }
+
+    @Override
+    public ResultVo updatecartNum(int cartId, String cartNum) {
+        int i = shoppingCartMapper.updatecartNumById(cartId, cartNum);
+        if (i>0){
+            return new ResultVo(ResStauts.OK,"update.success",i);
+        }else {
+            return new ResultVo(ResStauts.NO,"update.fail",null);
+
+        }
+    }
 }

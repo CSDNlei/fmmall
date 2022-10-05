@@ -3,6 +3,7 @@ package com.fengmi.fmmall.dao;
 import com.fengmi.fmmall.entity.ShoppingCart;
 import com.fengmi.fmmall.entity.ShoppingCartVo;
 import com.fengmi.fmmall.general.GeneralDao;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,13 @@ public interface ShoppingCartMapper extends GeneralDao<ShoppingCart> {
       * @return
       */
      List<ShoppingCartVo> selectshopcartByUserId(int userId);
+
+     /**
+      * 根据购物车id修改购物车中商品数量
+      * @param cartId
+      * @param cartNum
+      * @return
+      */
+     int updatecartNumById(@Param("cartId") int cartId,
+                          @Param("cartNum") String cartNum);
 }

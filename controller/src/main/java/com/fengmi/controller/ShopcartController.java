@@ -68,4 +68,8 @@ public class ShopcartController {
     public ResultVo shopcartlist(Integer userId,@RequestHeader("token") String token) {
         return shopCartService.listShopCartByUserId(userId);
     }
+    @PutMapping("/update/{cartId}/{cartNum}")
+    public ResultVo shopupdate(@PathVariable("cartId") Integer cartId,@PathVariable("cartNum") String cartNum,@RequestHeader("token") String token){
+           return shopCartService.updatecartNum(cartId,cartNum);
+    }
 }

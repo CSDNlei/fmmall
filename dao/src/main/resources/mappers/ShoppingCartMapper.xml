@@ -28,6 +28,9 @@
     <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="url" jdbcType="VARCHAR" property="productImg" />
+      <result column="original_price" jdbcType="VARCHAR" property="originalPrice"/>
+      <result column="sell_price" jdbcType="VARCHAR" property="sellPrice" />
+      <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
   </resultMap>
 
   <select id="selectshopcartByUserId" resultMap="ShopCartVoMap">
@@ -39,12 +42,16 @@
  s.cart_time,
  s.product_price,
  s.sku_props,
- p.product_name,i.url from
+ p.product_name,i.url,k.sell_price,k.original_price,k.sku_name from
 shopping_cart s
 INNER JOIN product p
 INNER JOIN product_img i
+INNER JOIN product_sku k
 on s.product_id=p.product_id and
 p.product_id=i.item_id
+and k.product_id=s.product_id
 where user_id=#{userId} and i.is_main=1
   </select>
+    <update id="updatecartNumById">
+     UPDATE shopping_cart set cart_num=#{cartNum} WHERE cart_id=#{cartId}</update>
 </mapper>

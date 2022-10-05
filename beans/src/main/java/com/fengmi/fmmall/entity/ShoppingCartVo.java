@@ -25,5 +25,8 @@ public class ShoppingCartVo {
 
     private String productName;
     private String productImg;
+    private Double originalPrice;
+    private Double sellPrice;
+    private String skuName;
 
 }

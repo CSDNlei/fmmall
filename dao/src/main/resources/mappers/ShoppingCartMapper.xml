@@ -54,4 +54,29 @@ where user_id=#{userId} and i.is_main=1
   </select>
     <update id="updatecartNumById">
      UPDATE shopping_cart set cart_num=#{cartNum} WHERE cart_id=#{cartId}</update>
+    <delete id="deleteshopcartById">
+        DELETE from shopping_cart where cart_id=#{cartId}
+    </delete>
+    <select id="selectShopcartByCids" resultMap="ShopCartVoMap">
+        select s.cart_id,
+        s.product_id,
+        s.sku_id,
+        s.user_id,
+        s.cart_num,
+        s.cart_time,
+        s.product_price,
+        s.sku_props,
+        p.product_name,i.url,k.sell_price,k.original_price,k.sku_name from
+        shopping_cart s
+        INNER JOIN product p
+        INNER JOIN product_img i
+        INNER JOIN product_sku k
+        on s.product_id=p.product_id and
+        p.product_id=i.item_id
+        and k.product_id=s.product_id
+        where  i.is_main=1 and s.cart_id in
+        <foreach collection="cids" item="cid" separator="," open="(" close=")">
+           #{cid}
+    </foreach>
+    </select>
 </mapper>

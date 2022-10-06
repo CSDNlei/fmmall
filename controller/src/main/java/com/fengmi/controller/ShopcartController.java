@@ -72,4 +72,8 @@ public class ShopcartController {
     public ResultVo shopupdate(@PathVariable("cartId") Integer cartId,@PathVariable("cartNum") String cartNum,@RequestHeader("token") String token){
            return shopCartService.updatecartNum(cartId,cartNum);
     }
+    @DeleteMapping("/delete/{cartId}")
+    public ResultVo deleteshopcart(@PathVariable("cartId") Integer cartId,@RequestHeader("token") String token){
+        return shopCartService.deletecartById(cartId);
+    }
 }

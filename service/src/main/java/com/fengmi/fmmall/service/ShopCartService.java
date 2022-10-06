@@ -2,7 +2,6 @@ package com.fengmi.fmmall.service;
 
 import com.fengmi.famall.vo.ResultVo;
 import com.fengmi.fmmall.entity.ShoppingCart;
-import org.apache.ibatis.annotations.Param;
 
 public interface ShopCartService {
     ResultVo shopCartadd(ShoppingCart cart);
@@ -11,4 +10,6 @@ public interface ShopCartService {
 
     ResultVo updatecartNum(int cartId,
                            String cartNum);
+
+    ResultVo deletecartById(int cartId);
 }

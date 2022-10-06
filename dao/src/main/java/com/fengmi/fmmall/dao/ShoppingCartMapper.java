@@ -25,4 +25,18 @@ public interface ShoppingCartMapper extends GeneralDao<ShoppingCart> {
       */
      int updatecartNumById(@Param("cartId") int cartId,
                           @Param("cartNum") String cartNum);
+
+     /**
+      * 根据购物车id删除购物车数据
+      * @param cartId
+      * @return
+      */
+     int deleteshopcartById(int cartId);
+
+     /**
+      * 查询购物车记录
+      * @param cids
+      * @return
+      */
+     List<ShoppingCartVo> selectShopcartByCids(List<Integer> cids);
 }

@@ -51,4 +51,14 @@ public class ShopCartServiceImpl implements ShopCartService {
 
         }
     }
+
+    @Override
+    public ResultVo deletecartById(int cartId) {
+        int i = shoppingCartMapper.deleteshopcartById(cartId);
+        if (i>0){
+            return new ResultVo(ResStauts.OK,"delete.success",i);
+        }else {
+            return new ResultVo(ResStauts.NO,"delete.fail",null);
+        }
+    }
 }

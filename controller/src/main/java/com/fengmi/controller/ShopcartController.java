@@ -65,7 +65,7 @@ public class ShopcartController {
 
     @GetMapping("/listshopcart")
     @ApiImplicitParam(dataType = "int", name = "userId", value = "用户id", required = true)
-    public ResultVo shopcartlist(Integer userId,@RequestHeader("token") String token) {
+    public ResultVo listshopcart(Integer userId,@RequestHeader("token") String token) {
         return shopCartService.listShopCartByUserId(userId);
     }
     @PutMapping("/update/{cartId}/{cartNum}")
@@ -75,5 +75,10 @@ public class ShopcartController {
     @DeleteMapping("/delete/{cartId}")
     public ResultVo deleteshopcart(@PathVariable("cartId") Integer cartId,@RequestHeader("token") String token){
         return shopCartService.deletecartById(cartId);
+    }
+    @GetMapping("/listByCids")
+    @ApiImplicitParam(dataType = "String", name = "cids", value = "选择的购物车记录", required = true)
+    public ResultVo shopcartByCids(String cids,@RequestHeader("token") String token) {
+        return shopCartService.listShopCartByCids(cids);
     }
 }

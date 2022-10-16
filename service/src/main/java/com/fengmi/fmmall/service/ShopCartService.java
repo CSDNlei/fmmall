@@ -12,4 +12,11 @@ public interface ShopCartService {
                            String cartNum);
 
     ResultVo deletecartById(int cartId);
+
+    /**
+     * 选择购物车记录
+     * @param cids
+     * @return
+     */
+    ResultVo listShopCartByCids(String cids);
 }

@@ -15,9 +15,6 @@
     <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
   </resultMap>
   <resultMap id="ShopCartVoMap" type="com.fengmi.fmmall.entity.ShoppingCartVo">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="cart_id" jdbcType="INTEGER" property="cartId" />
     <result column="product_id" jdbcType="VARCHAR" property="productId" />
     <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
@@ -57,7 +54,23 @@ where user_id=#{userId} and i.is_main=1
     <delete id="deleteshopcartById">
         DELETE from shopping_cart where cart_id=#{cartId}
     </delete>
-    <select id="selectShopcartByCids" resultMap="ShopCartVoMap">
+    <resultMap id="ShopCartVoMap2" type="com.fengmi.fmmall.entity.ShoppingCartVo">
+        <id column="cart_id" jdbcType="INTEGER" property="cartId" />
+        <result column="product_id" jdbcType="VARCHAR" property="productId" />
+        <result column="sku_id" jdbcType="VARCHAR" property="skuId" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="cart_num" jdbcType="VARCHAR" property="cartNum" />
+        <result column="cart_time" jdbcType="VARCHAR" property="cartTime" />
+        <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+        <result column="sku_props" jdbcType="VARCHAR" property="skuProps" />
+        <result column="product_name" jdbcType="VARCHAR" property="productName" />
+        <result column="url" jdbcType="VARCHAR" property="productImg" />
+        <result column="original_price" jdbcType="VARCHAR" property="originalPrice"/>
+        <result column="sell_price" jdbcType="VARCHAR" property="sellPrice" />
+        <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
+        <result column="stock"  property="skuStock" />
+    </resultMap>
+    <select id="selectShopcartByCids" resultMap="ShopCartVoMap2">
         select s.cart_id,
         s.product_id,
         s.sku_id,
@@ -66,7 +79,7 @@ where user_id=#{userId} and i.is_main=1
         s.cart_time,
         s.product_price,
         s.sku_props,
-        p.product_name,i.url,k.sell_price,k.original_price,k.sku_name from
+        p.product_name,i.url,k.sell_price,k.original_price,k.sku_name,k.stock from
         shopping_cart s
         INNER JOIN product p
         INNER JOIN product_img i

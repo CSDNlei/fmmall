@@ -219,23 +219,19 @@ public class ProductSku {
         this.discounts = discounts;
     }
 
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
     /**
      * 获取库存
      *
      * @return stock - 库存
      */
-    public Integer getStock() {
-        return stock;
-    }
-
-    /**
-     * 设置库存
-     *
-     * @param stock 库存
-     */
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
 
     /**
      * 获取创建时间

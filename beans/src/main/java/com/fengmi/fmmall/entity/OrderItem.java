@@ -6,24 +6,41 @@ import javax.persistence.*;
 
 @Table(name = "order_item")
 public class OrderItem {
+
+    public OrderItem(String itemId, String orderId, String productId, String productName, String productImg, String skuId, String skuName, BigDecimal productPrice, Integer buyCounts, BigDecimal totalAmount, Date basketDate, Date buyTime, Integer isComment) {
+        this.itemId = itemId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.productName = productName;
+        this.productImg = productImg;
+        this.skuId = skuId;
+        this.skuName = skuName;
+        this.productPrice = productPrice;
+        this.buyCounts = buyCounts;
+        this.totalAmount = totalAmount;
+        this.basketDate = basketDate;
+        this.buyTime = buyTime;
+        this.isComment = isComment;
+    }
+
     /**
      * 订单项ID
      */
     @Id
     @Column(name = "item_id")
-    private Integer itemId;
+    private String itemId;
 
     /**
      * 订单ID
      */
     @Column(name = "order_id")
-    private Integer orderId;
+    private String orderId;
 
     /**
      * 商品ID
      */
     @Column(name = "product_id")
-    private Integer productId;
+    private String productId;
 
     /**
      * 商品名称
@@ -90,52 +107,27 @@ public class OrderItem {
      *
      * @return item_id - 订单项ID
      */
-    public Integer getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    /**
-     * 设置订单项ID
-     *
-     * @param itemId 订单项ID
-     */
-    public void setItemId(Integer itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 
-    /**
-     * 获取订单ID
-     *
-     * @return order_id - 订单ID
-     */
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    /**
-     * 设置订单ID
-     *
-     * @param orderId 订单ID
-     */
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    /**
-     * 获取商品ID
-     *
-     * @return product_id - 商品ID
-     */
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    /**
-     * 设置商品ID
-     *
-     * @param productId 商品ID
-     */
-    public void setProductId(Integer productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

@@ -68,12 +68,27 @@ class ControllerApplicationTests {
         List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectshopcartByUserId(49);
         System.out.println(shoppingCartVos);
     }
-   @Test
-    public  void test04(){
-       ArrayList<Integer> objects = new ArrayList<>();
+
+    @Test
+    public void test04() {
+        ArrayList<Integer> objects = new ArrayList<>();
         objects.add(85);
         objects.add(88);
-       List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectShopcartByCids(objects);
-       System.out.println("shoppingCartVos = " + shoppingCartVos);
-   }
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectShopcartByCids(objects);
+        System.out.println("shoppingCartVos = " + shoppingCartVos);
+    }
+
+    @Test
+    public void test05() {
+        String cids="120,121";
+        String[] split = cids.split(",");
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < split.length; i++) {
+            list.add(Integer.parseInt(split[i]));
+        }
+        List<ShoppingCartVo> shoppingCartVos = shoppingCartMapper.selectShopcartByCids(list);
+       for (ShoppingCartVo sc:shoppingCartVos){
+           System.out.println("sc = " + sc);
+       }
+    }
 }

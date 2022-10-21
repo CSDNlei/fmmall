@@ -25,5 +25,6 @@ public class ShoppingCartVo {
     private Double originalPrice;
     private Double sellPrice;
     private String skuName;
+    private Integer skuStock;
 
 }

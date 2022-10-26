@@ -30,14 +30,17 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private ProductSkuMapper productSkuMapper;
 
-    /**保存订单业务
+    /**
+     * 保存订单业务
+     *
      * @param cids   cartId   **120,121**
      * @param orders
      * @return
      */
     @Override
     @Transactional  //此注解将一下所有事务看做一个整体  单个执行失败则全部失败
-    public ResultVo Orderaddr(String cids, Orders orders) throws SQLException {
+    public Map<String, String> Orderaddr(String cids, Orders orders) throws SQLException {
+        HashMap<String, String> map = new HashMap<>();
 //      1.   校验库存   根据cids查询当前订单中关联的购物车记录详情 包括库存
         String[] split = cids.split(",");
         List<Integer> list = new ArrayList<>();
@@ -83,13 +86,29 @@ public class OrderServiceImpl implements OrderService {
                 productSkuMapper.updateByPrimaryKeySelective(productSku);
             }
             // 5.删除购物车 当购物车购买成功之后 购物车中做对应删除操作
-            for(int cid:list){
+            for (int cid : list) {
                 shoppingCartMapper.deleteByPrimaryKey(cid);
             }
-            return new ResultVo(ResStauts.OK, "下单成功！", orderId);
+            map.put("orderId", orderId);
+            map.put("productNames", untitled);
+            return map;
         } else {
 //               表示库存不足
-            return new ResultVo(ResStauts.NO, "库存不足，下单失败!", null);
+            return null;
         }
+    }
+
+    @Override
+    public int UpdateOrderStauts(String orderId, String status) {
+        Orders orders = new Orders();
+        orders.setOrderId(orderId);
+        orders.setStatus(status);
+        return ordersMapper.updateByPrimaryKeySelective(orders);
+    }
+
+    @Override
+    public ResultVo getOrderById(String orderId) {
+        Orders orders = ordersMapper.selectByPrimaryKey(orderId);
+        return new ResultVo(ResStauts.OK,"success",orders.getStatus());
     }
 }

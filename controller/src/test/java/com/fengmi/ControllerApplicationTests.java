@@ -1,10 +1,8 @@
 package com.fengmi;
 
-import com.fengmi.fmmall.dao.CategoryMapper;
-import com.fengmi.fmmall.dao.ProductCommentsMapper;
-import com.fengmi.fmmall.dao.ProductMapper;
-import com.fengmi.fmmall.dao.ShoppingCartMapper;
+import com.fengmi.fmmall.dao.*;
 import com.fengmi.fmmall.entity.CategoryVo;
+import com.fengmi.fmmall.entity.Orders;
 import com.fengmi.fmmall.entity.ProductVo;
 import com.fengmi.fmmall.entity.ShoppingCartVo;
 import org.junit.jupiter.api.Test;
@@ -12,9 +10,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -28,7 +28,8 @@ class ControllerApplicationTests {
     private ProductCommentsMapper productCommentsMapper;
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
-
+    @Autowired
+    private OrdersMapper ordersMapper;
     @Test
     void contextLoads() {
         List<CategoryVo> categoryVos = categoryMapper.selectAllCategories2(0);
@@ -90,5 +91,18 @@ class ControllerApplicationTests {
        for (ShoppingCartVo sc:shoppingCartVos){
            System.out.println("sc = " + sc);
        }
+    }
+    @Test
+    public void test06(){
+        Example example = new Example(Orders.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("status","1");
+        Date date = new Date(System.currentTimeMillis() - 30 * 60 * 1000);
+        criteria.andLessThan("createTime",date);
+        List<Orders> orders = ordersMapper.selectByExample(example);
+
+        for (int i = 0; i <orders.size() ; i++) {
+            System.out.println(orders.get(i).getOrderId()+"\t"+orders.get(i).getStatus()+"\t"+orders.get(i).getCreateTime());
+        }
     }
 }

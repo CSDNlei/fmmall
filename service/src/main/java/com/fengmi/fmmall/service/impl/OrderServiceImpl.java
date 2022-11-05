@@ -12,7 +12,9 @@ import com.fengmi.fmmall.entity.ProductSku;
 import com.fengmi.fmmall.entity.ShoppingCartVo;
 import com.fengmi.fmmall.service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -109,6 +111,34 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResultVo getOrderById(String orderId) {
         Orders orders = ordersMapper.selectByPrimaryKey(orderId);
-        return new ResultVo(ResStauts.OK,"success",orders.getStatus());
+        return new ResultVo(ResStauts.OK, "success", orders.getStatus());
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.SERIALIZABLE)  //事务锁
+    public void closeOrder(String orderId) {
+        synchronized (this) {  //jvm锁
+            /*b.修改当前订单：  status=6  已关闭 close_type=1 超时未支付*/
+            Orders orders1 = new Orders();
+            orders1.setOrderId(orderId);
+            orders1.setStatus("6");
+            orders1.setCloseType(1);
+            ordersMapper.updateByPrimaryKeySelective(orders1);
+            /**还原库存
+             * 先根据当前订单编号查询商品快照  ===>修改product_sku
+             * **/
+            Example example1 = new Example(OrderItem.class);
+            Example.Criteria criteria1 = example1.createCriteria();
+            criteria1.andEqualTo("orderId", orderId);
+            List<OrderItem> orderItems = orderItemMapper.selectByExample(example1);
+            /**还原库存**/
+            for (int j = 0; j < orderItems.size(); j++) {
+                OrderItem orderItem = orderItems.get(j);
+//                        修改
+                ProductSku productSku = productSkuMapper.selectByPrimaryKey(orderItem.getSkuId());
+                productSku.setStock(productSku.getStock() + orderItem.getBuyCounts());
+                productSkuMapper.updateByPrimaryKey(productSku);
+            }
+        }
     }
 }

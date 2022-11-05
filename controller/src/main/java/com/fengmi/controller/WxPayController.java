@@ -2,6 +2,7 @@ package com.fengmi.controller;
 import com.fengmi.fmmall.service.OrderService;
 import com.fengmi.websocket.WebSocketServer;
 import com.github.wxpay.sdk.WXPayUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,8 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/pay")
-public class PayController {
+@Slf4j
+public class WxPayController {
     @Autowired
     private OrderService orderService;
     @RequestMapping("/callback")
@@ -31,7 +33,7 @@ public class PayController {
               builder.append(new String(bs,0,length));
         }
         String s = builder.toString();
-        System.out.println("s = " + s);
+        log.info("结果="+s);
         Map<String, String> map = WXPayUtil.xmlToMap(s);
          if (map!=null && "success".equalsIgnoreCase(map.get("result_code"))){
 //             支付成功

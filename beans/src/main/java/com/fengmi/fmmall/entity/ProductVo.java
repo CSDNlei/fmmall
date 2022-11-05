@@ -1,10 +1,18 @@
 package com.fengmi.fmmall.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class ProductVo {
     /**
      * 商品主键id
@@ -13,21 +21,8 @@ public class ProductVo {
     @Column(name = "product_id")
     private String productId;
 
-    @Override
-    public String toString() {
-        return "ProductVo{" +
-                "productId='" + productId + '\'' +
-                ", imgs=" + imgs +
-                ", productName='" + productName + '\'' +
-                ", categoryId=" + categoryId +
-                ", rootCategoryId=" + rootCategoryId +
-                ", soldNum=" + soldNum +
-                ", productStatus=" + productStatus +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", content='" + content + '\'' +
-                '}';
-    }
+
+
 
     public List<ProductVo> getImgs() {
         return imgs;
@@ -37,9 +32,8 @@ public class ProductVo {
         this.imgs = imgs;
     }
 
-    private List<ProductVo> imgs;
-
-
+    private List<ProductVo> imgs; //查询商品的时候  关联查询商品的图片信息
+    private List<ProductVo> skus; //查询商品的时候  关联查询商品的套餐信息
     /**
      * 商品名称 商品名称
      */

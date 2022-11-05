@@ -3,6 +3,7 @@ package com.fengmi.fmmall.dao;
 import com.fengmi.fmmall.entity.Product;
 import com.fengmi.fmmall.entity.ProductVo;
 import com.fengmi.fmmall.general.GeneralDao;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,15 @@ public interface ProductMapper extends GeneralDao<Product> {
      * @return
      */
     List<ProductVo> selectTop6Byproduct(int cid);
+
+    /**
+     * 根据三级分类id分页查询商品信息
+     * @param cid 三级分类id
+     * @param start 起始索引
+     * @param limit 查询记录数
+     * @return
+     */
+    List<ProductVo> selectcategoryById(@Param("cid") int cid,
+                                       @Param("start")int start,
+                                       @Param("limit")int limit);
 }

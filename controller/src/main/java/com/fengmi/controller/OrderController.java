@@ -1,11 +1,14 @@
 package com.fengmi.controller;
 
+import com.alipay.api.domain.AlipayItemLimitPeriodInfo;
+import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.fengmi.config.MyPayConfig;
 import com.fengmi.famall.vo.ResStauts;
 import com.fengmi.famall.vo.ResultVo;
 import com.fengmi.fmmall.entity.Orders;
 import com.fengmi.fmmall.service.OrderService;
 import com.github.wxpay.sdk.WXPay;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +39,7 @@ public class OrderController {
 //                data.put("total_fee", orders.getActualAmount() * 100 + ""); //支付金额
                 data.put("total_fee", "1"); //支付金额
                 data.put("trade_type", "NATIVE"); //交易类型
-                data.put("notify_url", "http://tww5bf.natappfree.cc/pay/callback"); //交易类型
+                data.put("notify_url", "http://yhn3zg.natappfree.cc/pay/callback"); //交易类型
 //           发送请求  获取回应
 //            微信支付 申请支付链接
                 WXPay wxPay = new WXPay(new MyPayConfig());
@@ -54,7 +57,9 @@ public class OrderController {
         return null;
     }
 
-    @GetMapping("/status/{oid}")
+
+
+     @GetMapping("/status/{oid}")
     public ResultVo getOrderStatus(@PathVariable("oid") String orderId,@RequestHeader("token") String token) {
         return orderService.getOrderById(orderId);
     }

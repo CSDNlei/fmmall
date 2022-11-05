@@ -21,4 +21,8 @@ public interface OrderService {
      * 显示订单支付结果
      */
     ResultVo getOrderById(String orderId);
+    /**
+     * 关闭订单
+     */
+    void closeOrder(String orderId);
 }
